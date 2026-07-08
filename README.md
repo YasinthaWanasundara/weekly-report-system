@@ -2,7 +2,7 @@
 
 A full-stack web app that lets team members submit structured weekly work reports and lets managers view and analyze those reports across the whole team via a consolidated dashboard.
 
-**Stack:** React (Vite + Tailwind + Recharts) · Node.js / Express · PostgreSQL (Sequelize ORM) · JWT auth
+**Stack:** React (Vite + Tailwind + Recharts) · Node.js / Express · PostgreSQL · JWT auth
 
 ## Contents
 
@@ -41,7 +41,7 @@ npm install
 
 ## 2. Running the database
 
-**Option A — Local PostgreSQL**
+**Local PostgreSQL**
 
 ```bash
 # macOS (Homebrew)
@@ -68,19 +68,6 @@ psql -U postgres -c "CREATE DATABASE weekly_reports;"
 sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
 ```
 
-**Option B — Free cloud PostgreSQL (no local install)**
-
-Any of these work well and take a couple of minutes to set up:
-- **Neon** — https://neon.tech (generous free tier, instant provisioning)
-- **Supabase** — https://supabase.com (free tier includes a Postgres database)
-- **Railway** — https://railway.app
-
-Each gives you a connection string that looks like:
-```
-postgres://user:password@host:5432/dbname
-```
-Use that directly as `DATABASE_URL` in step 3 — skip the local install entirely.
-
 ## 3. Running the backend
 
 ```bash
@@ -97,8 +84,6 @@ JWT_SECRET=replace_this_with_a_long_random_secret
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:5173
 ```
-
-(swap `DATABASE_URL` for your cloud provider's connection string if using Option B above)
 
 Then start the server:
 
@@ -176,7 +161,7 @@ npm run preview   # serve the production build locally
 | GET/POST | `/api/projects` | Auth / Manager | List / create projects |
 | PUT/DELETE | `/api/projects/:id` | Manager | Edit / remove project |
 | GET/POST | `/api/reports` | Authenticated | List (own or, for managers, filtered team-wide) / create report |
-| PUT/DELETE | `/api/reports/:id` | Owner only | Edit / delete own report |
+| PUT/DELETE | `/api/reports/:id` | Manager only | Edit / delete own report |
 | GET | `/api/dashboard/summary` | Manager | Weekly summary metrics |
 | GET | `/api/dashboard/submission-status` | Manager | Per-member submitted/pending/late |
 | GET | `/api/dashboard/tasks-trend` | Manager | Reports-submitted trend over weeks |
@@ -196,6 +181,4 @@ npm run preview   # serve the production build locally
 - AI chat assistant over stored reports (Q&A + auto-generated team summaries)
 - Email/Slack reminders for pending or late reports
 - Refresh-token rotation instead of long-lived JWTs
-- Formal Sequelize migrations (`sequelize-cli`) instead of `sync({ alter: true })`, for safer production schema changes
-- Per-project team assignment enforced at the report-creation step
 - Exportable PDF/CSV weekly summaries for managers
