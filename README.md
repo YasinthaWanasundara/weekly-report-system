@@ -41,7 +41,7 @@ npm install
 
 ## 2. Running the database
 
-**Option A — Local PostgreSQL**
+**Local PostgreSQL**
 
 ```bash
 # macOS (Homebrew)
