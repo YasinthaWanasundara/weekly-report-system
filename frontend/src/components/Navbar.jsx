@@ -23,7 +23,7 @@ export default function Navbar() {
             Weekly<span className="text-brand-500">Report</span>
           </span>
           <div className="hidden sm:flex gap-1">
-            <NavLink to="/" end className={linkClass}>
+            <NavLink to="/app" end className={linkClass}>
               My Reports
             </NavLink>
             {user?.role === "manager" && (
